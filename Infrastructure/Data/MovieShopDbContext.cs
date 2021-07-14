@@ -24,6 +24,7 @@ namespace Infrastructure.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(ConfigureMovie);
@@ -38,6 +39,14 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Role>(ConfigureRole);
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
             modelBuilder.Entity<Purchase>(ConfigurePurchase);
+            modelBuilder.Entity<Review>(ConfigureReview);
+        }
+        private void ConfigureReview(EntityTypeBuilder<Review> builder)
+        {
+            builder.ToTable("Review");
+            builder.HasKey(r => new { r.MovieId, r.UserId });
+            builder.Property(r => r.Rating).HasColumnType("decimal(3,2)");
+            builder.Property(r => r.ReviewText);
         }
         private void ConfigurePurchase(EntityTypeBuilder<Purchase> builder)
         {

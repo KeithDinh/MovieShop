@@ -23,5 +23,6 @@ namespace ApplicationCore.Entities
         public int AccessFailedCount { get; set; }
         public IEnumerable<UserRole> UserRole { get; set; }
         public IEnumerable<Purchase> Purchases { get; set; }
+        public IEnumerable<Review> Reviews { get; set; }
     }
 }
