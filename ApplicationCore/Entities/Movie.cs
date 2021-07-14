@@ -33,8 +33,8 @@ namespace ApplicationCore.Entities
         public ICollection<Purchase> Purchases { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
+        public ICollection<Genre> Genres { get; set; }
         public ICollection<MovieCrew> MovieCrew { get; set; }
-        public ICollection<MovieGenre> MovieGenre { get; set; }
         public ICollection<MovieCast> MovieCast { get; set; }
     }
 }
