@@ -13,10 +13,7 @@ namespace Infrastructure.Repositories
 {
     public class MovieRepository : EfRepository<Movie>, IMovieRepository
     {
-        public MovieRepository(MovieShopDbContext dbContext ) : base(dbContext)
-        {
-
-        }
+        public MovieRepository(MovieShopDbContext dbContext ) : base(dbContext) {}
         public async Task<List<Movie>> GettingHighest30GrossingMovie()
         {
             var topMovies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();

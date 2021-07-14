@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class GenreRepository: EfRepository<Genre>, IGenreRepository
-    {
-    }
+    //public class GenreRepository: EfRepository<Genre>, IGenreRepository
+    //{
+    //}
 }
