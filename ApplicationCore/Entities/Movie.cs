@@ -27,6 +27,8 @@ namespace ApplicationCore.Entities
         public string UpdatedBy { get; set; }
         public string CreatedBy { get; set; }
         public decimal? Rating { get; set; }
+
+        // Navigation for relations
         public ICollection<Trailer> Trailers { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
         public ICollection<Review> Reviews { get; set; }
