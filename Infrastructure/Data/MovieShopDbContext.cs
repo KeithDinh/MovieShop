@@ -25,6 +25,28 @@ namespace Infrastructure.Data
         {
             modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<Trailer>(ConfigureTrailer);
+            modelBuilder.Entity<Crew>(ConfigureCrew);
+            modelBuilder.Entity<MovieCrew>(ConfigureMovieCrew);
+            //modelBuilder.Entity<Genre>(ConfigureMovieCrew);
+            //modelBuilder.Entity<MovieGenre>(ConfigureMovieCrew);
+        }
+        private void ConfigureMovieCrew(EntityTypeBuilder<MovieCrew> builder)
+        {
+            builder.ToTable("MovieCrew");
+            builder.HasKey(mc => new { mc.MovieId, mc.CrewId});
+            builder.Property(mc => mc.Department).HasMaxLength(128).IsRequired();
+            builder.Property(mc => mc.Job).HasMaxLength(128).IsRequired();
+            builder.HasOne(mc => mc.Crew).WithMany(c => c.MovieCrew).HasForeignKey(mc => mc.CrewId);
+            builder.HasOne(mc => mc.Movie).WithMany(c => c.MovieCrew).HasForeignKey(mc => mc.MovieId);
+        }
+        private void ConfigureCrew(EntityTypeBuilder<Crew> builder)
+        {
+            builder.ToTable("Crew");
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Name).HasMaxLength(128);
+            builder.Property(c => c.Gender);
+            builder.Property(c => c.TmdbUrl);
+            builder.Property(c => c.ProfilePath).HasMaxLength(2084);
         }
         private void ConfigureMovie(EntityTypeBuilder<Movie> builder)
         {
