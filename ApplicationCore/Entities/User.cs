@@ -22,5 +22,6 @@ namespace ApplicationCore.Entities
         public bool IsLocked { get; set; }
         public int AccessFailedCount { get; set; }
         public IEnumerable<UserRole> UserRole { get; set; }
+        public IEnumerable<Purchase> Purchases { get; set; }
     }
 }

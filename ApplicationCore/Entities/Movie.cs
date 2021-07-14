@@ -29,6 +29,7 @@ namespace ApplicationCore.Entities
 
         public decimal? Rating { get; set; }
         public ICollection<Trailer> Trailers { get; set; }
+        public ICollection<Purchase> Purchases { get; set; }
         public ICollection<MovieCrew> MovieCrew { get; set; }
         public ICollection<MovieGenre> MovieGenre { get; set; }
         public ICollection<MovieCast> MovieCast { get; set; }

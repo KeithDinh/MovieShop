@@ -23,6 +23,7 @@ namespace Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(ConfigureMovie);
@@ -36,6 +37,17 @@ namespace Infrastructure.Data
             modelBuilder.Entity<User>(ConfigureUser);
             modelBuilder.Entity<Role>(ConfigureRole);
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
+            modelBuilder.Entity<Purchase>(ConfigurePurchase);
+        }
+        private void ConfigurePurchase(EntityTypeBuilder<Purchase> builder)
+        {
+            builder.ToTable("Purchase");
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.UserId);
+            builder.Property(p => p.MovieId);
+            builder.Property(p => p.PurchaseDateTime).HasColumnType("datetime2(7)");
+            builder.Property(p => p.TotalPrice).HasColumnType("decimal(18,2)");
+            builder.Property(p => p.PurchaseNumber).HasColumnType("uniqueidentifier");
         }
         private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
         {
