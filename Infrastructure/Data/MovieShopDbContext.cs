@@ -27,8 +27,21 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Trailer>(ConfigureTrailer);
             modelBuilder.Entity<Crew>(ConfigureCrew);
             modelBuilder.Entity<MovieCrew>(ConfigureMovieCrew);
-            //modelBuilder.Entity<Genre>(ConfigureMovieCrew);
-            //modelBuilder.Entity<MovieGenre>(ConfigureMovieCrew);
+            modelBuilder.Entity<Genre>(ConfigureGenre);
+            modelBuilder.Entity<MovieGenre>(ConfigureMovieGenre);
+        }
+        private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
+        {
+            builder.ToTable("MovieGenre");
+            builder.HasKey(mg => new { mg.MovieId, mg.GenreId });
+            builder.HasOne(mg => mg.Genre).WithMany(m => m.MovieGenre).HasForeignKey(mg => mg.GenreId);
+            builder.HasOne(mg => mg.Movie).WithMany(m => m.MovieGenre).HasForeignKey(mg => mg.MovieId);
+        }
+        private void ConfigureGenre(EntityTypeBuilder<Genre> builder)
+        {
+            builder.ToTable("Genre");
+            builder.HasKey(g => g.Id);
+            builder.Property(g => g.Name).HasMaxLength(64);
         }
         private void ConfigureMovieCrew(EntityTypeBuilder<MovieCrew> builder)
         {
