@@ -18,6 +18,8 @@ namespace Infrastructure.Data
         public DbSet<Genre> Genres {get; set;}
         public DbSet<Movie> Movies {get; set;}
         public DbSet<Trailer> Trailer { get; set; }
+        public DbSet<Crew> Crew { get; set; }
+        public DbSet<MovieCrew> MovieCrew { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
