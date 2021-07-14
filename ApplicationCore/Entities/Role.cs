@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace ApplicationCore.Entities
 {
-    public class Genre
+    public class Role
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<MovieGenre> MovieGenre { get; set; }
+        public IEnumerable<UserRole> UserRole { get; set; }
     }
 }

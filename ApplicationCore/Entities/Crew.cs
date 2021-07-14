@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace ApplicationCore.Entities
 {
-    public class Genre
+    public class Crew
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<MovieGenre> MovieGenre { get; set; }
+        public string Gender { get; set; }
+        public string TmdbUrl { get; set; }
+        public string ProfilePath { get; set; }
+        public ICollection<MovieCrew> MovieCrew { get; set; }
     }
 }
