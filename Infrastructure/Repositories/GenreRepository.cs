@@ -1,14 +1,14 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.RepositoryInterfaces
+namespace Infrastructure.Repositories
 {
-    public interface IMovieRepository : IAsyncRepository<Movie>
+    public class GenreRepository: EfRepository<Genre>, IGenreRepository
     {
-        Task<List<Movie>> GettingHighest30GrossingMovie();
     }
 }
