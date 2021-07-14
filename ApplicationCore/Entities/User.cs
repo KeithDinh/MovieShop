@@ -24,5 +24,6 @@ namespace ApplicationCore.Entities
         public IEnumerable<UserRole> UserRole { get; set; }
         public IEnumerable<Purchase> Purchases { get; set; }
         public IEnumerable<Review> Reviews { get; set; }
+        public IEnumerable<Favorite> Favorites { get; set; }
     }
 }

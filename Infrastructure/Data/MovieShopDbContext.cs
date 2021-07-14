@@ -25,6 +25,7 @@ namespace Infrastructure.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>(ConfigureMovie);
@@ -40,23 +41,27 @@ namespace Infrastructure.Data
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
             modelBuilder.Entity<Purchase>(ConfigurePurchase);
             modelBuilder.Entity<Review>(ConfigureReview);
+            modelBuilder.Entity<Favorite>(ConfigureFavorite);
+        }
+        private void ConfigureFavorite(EntityTypeBuilder<Favorite> builder)
+        {
+            builder.ToTable("Favorite");
+            builder.HasKey(f => f.Id);
         }
         private void ConfigureReview(EntityTypeBuilder<Review> builder)
         {
             builder.ToTable("Review");
             builder.HasKey(r => new { r.MovieId, r.UserId });
-            builder.Property(r => r.Rating).HasColumnType("decimal(3,2)");
+            builder.Property(r => r.Rating).HasColumnType("decimal(3,2)").IsRequired();
             builder.Property(r => r.ReviewText);
         }
         private void ConfigurePurchase(EntityTypeBuilder<Purchase> builder)
         {
             builder.ToTable("Purchase");
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.UserId);
-            builder.Property(p => p.MovieId);
-            builder.Property(p => p.PurchaseDateTime).HasColumnType("datetime2(7)");
-            builder.Property(p => p.TotalPrice).HasColumnType("decimal(18,2)");
-            builder.Property(p => p.PurchaseNumber).HasColumnType("uniqueidentifier");
+            builder.Property(p => p.PurchaseDateTime).HasColumnType("datetime2(7)").IsRequired();
+            builder.Property(p => p.TotalPrice).HasColumnType("decimal(18,2)").IsRequired();
+            builder.Property(p => p.PurchaseNumber).HasColumnType("uniqueidentifier").IsRequired();
         }
         private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
         {
@@ -91,8 +96,7 @@ namespace Infrastructure.Data
         private void ConfigureMovieCast(EntityTypeBuilder<MovieCast> builder)
         {
             builder.ToTable("MovieCast");
-            builder.HasKey(mc => new { mc.MovieId, mc.CastId });
-            builder.Property(mc => mc.Character).HasMaxLength(450);
+            builder.HasKey(mc => new { mc.MovieId, mc.CastId, mc.Character });
             builder.HasOne(mc => mc.Cast).WithMany(c => c.MovieCast).HasForeignKey(mc => mc.CastId);
             builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCast).HasForeignKey(mc => mc.MovieId);
         }
@@ -116,14 +120,12 @@ namespace Infrastructure.Data
         {
             builder.ToTable("Genre");
             builder.HasKey(g => g.Id);
-            builder.Property(g => g.Name).HasMaxLength(64);
+            builder.Property(g => g.Name).HasMaxLength(64).IsRequired();
         }
         private void ConfigureMovieCrew(EntityTypeBuilder<MovieCrew> builder)
         {
             builder.ToTable("MovieCrew");
-            builder.HasKey(mc => new { mc.MovieId, mc.CrewId});
-            builder.Property(mc => mc.Department).HasMaxLength(128).IsRequired();
-            builder.Property(mc => mc.Job).HasMaxLength(128).IsRequired();
+            builder.HasKey(mc => new { mc.MovieId, mc.CrewId, mc.Department, mc.Job});
             builder.HasOne(mc => mc.Crew).WithMany(c => c.MovieCrew).HasForeignKey(mc => mc.CrewId);
             builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCrew).HasForeignKey(mc => mc.MovieId);
         }
