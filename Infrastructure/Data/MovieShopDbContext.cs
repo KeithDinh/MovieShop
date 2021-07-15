@@ -1,4 +1,6 @@
-﻿using ApplicationCore.Entities;
+﻿// https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key#fully-defined-relationships
+
+using ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -96,8 +98,8 @@ namespace Infrastructure.Data
         {
             builder.ToTable("MovieCast");
             builder.HasKey(mc => new { mc.MovieId, mc.CastId, mc.Character });
-            builder.HasOne(mc => mc.Cast).WithMany(c => c.MovieCast).HasForeignKey(mc => mc.CastId);
-            builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCast).HasForeignKey(mc => mc.MovieId);
+            builder.HasOne(mc => mc.Cast).WithMany(c => c.MovieCasts).HasForeignKey(mc => mc.CastId);
+            builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCasts).HasForeignKey(mc => mc.MovieId);
         }
         private void ConfigureCast(EntityTypeBuilder<Cast> builder)
         {
@@ -118,8 +120,8 @@ namespace Infrastructure.Data
         {
             builder.ToTable("MovieCrew");
             builder.HasKey(mc => new { mc.MovieId, mc.CrewId, mc.Department, mc.Job});
-            builder.HasOne(mc => mc.Crew).WithMany(c => c.MovieCrew).HasForeignKey(mc => mc.CrewId);
-            builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCrew).HasForeignKey(mc => mc.MovieId);
+            builder.HasOne(mc => mc.Crew).WithMany(c => c.MovieCrews).HasForeignKey(mc => mc.CrewId);
+            builder.HasOne(mc => mc.Movie).WithMany(m => m.MovieCrews).HasForeignKey(mc => mc.MovieId);
         }
         private void ConfigureCrew(EntityTypeBuilder<Crew> builder)
         {
