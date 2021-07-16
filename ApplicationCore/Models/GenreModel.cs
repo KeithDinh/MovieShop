@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models
 {
-    public class MovieCardResponseModel
+    public class GenreModel
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string PosterUrl { get; set; }
-        public decimal Budget { get; set; }
+        public string Name { get; set; }
     }
 }
