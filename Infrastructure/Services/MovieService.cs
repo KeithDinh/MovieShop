@@ -25,7 +25,13 @@ namespace Infrastructure.Services
 
             foreach (var movie in movies)
             {
-                movieCards.Add(new MovieCardResponseModel { Id = movie.Id, Budget = movie.Budget.GetValueOrDefault(), PosterUrl = movie.PosterUrl, Title = movie.Title });
+                movieCards.Add(new MovieCardResponseModel 
+                { 
+                    Id = movie.Id, 
+                    Budget = movie.Budget.GetValueOrDefault(), 
+                    PosterUrl = movie.PosterUrl, 
+                    Title = movie.Title 
+                });
             }
 
             return movieCards;
