@@ -25,7 +25,13 @@ namespace Infrastructure.Services
 
             foreach (var movie in movies)
             {
-                movieCards.Add(new MovieCardResponseModel { Id = movie.Id, Budget = movie.Budget.GetValueOrDefault(), PosterUrl = movie.PosterUrl, Title = movie.Title });
+                movieCards.Add(new MovieCardResponseModel 
+                { 
+                    Id = movie.Id, 
+                    Budget = movie.Budget.GetValueOrDefault(), 
+                    PosterUrl = movie.PosterUrl, 
+                    Title = movie.Title 
+                });
             }
 
             return movieCards;
@@ -39,7 +45,18 @@ namespace Infrastructure.Services
             {
                 Id = movie.Id,
                 Title = movie.Title,
-                Budget = movie.Budget.GetValueOrDefault()
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                Rating = movie.Rating,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget.GetValueOrDefault(),
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
+                Revenue = movie.Revenue,
             };
 
             movieDetails.Casts = new List<CastResponseModel>();
@@ -51,7 +68,8 @@ namespace Infrastructure.Services
                     Id = cast.CastId,
                     Name = cast.Cast.Name,
                     Character = cast.Character,
-                    ProfilePath = cast.Cast.ProfilePath
+                    ProfilePath = cast.Cast.ProfilePath,
+                    TmdbUrl = cast.Cast.TmdbUrl,
                 });
             }
 
@@ -64,7 +82,7 @@ namespace Infrastructure.Services
                         Id = genre.Id,
                         Name = genre.Name
                     }
-                    );
+                );
             }
 
             return movieDetails;
