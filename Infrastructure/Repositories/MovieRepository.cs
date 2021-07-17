@@ -22,7 +22,9 @@ namespace Infrastructure.Repositories
 
         public override async Task<Movie> GetByIdAsync(int id)
         {
-            var movie = await _dbContext.Movies.Include(m => m.MovieCasts).ThenInclude(m => m.Cast)
+            var movie = await _dbContext
+                .Movies.Include(m => m.MovieCasts)
+                .ThenInclude(m => m.Cast)
                 .Include(m => m.Genres).FirstOrDefaultAsync(m => m.Id == id);
 
             if (movie == null)
@@ -36,7 +38,6 @@ namespace Infrastructure.Repositories
             {
                 movie.Rating = movieRating;
             }
-
             return movie;
         }
     }
