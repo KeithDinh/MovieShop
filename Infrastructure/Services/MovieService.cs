@@ -63,7 +63,7 @@ namespace Infrastructure.Services
 
             foreach (var cast in movie.MovieCasts)
             {
-                movieDetails.Casts.Add(new CastResponseModel
+                movieDetails.Casts.Add(new CastResponseModel ()
                 {
                     Id = cast.CastId,
                     Name = cast.Cast.Name,
