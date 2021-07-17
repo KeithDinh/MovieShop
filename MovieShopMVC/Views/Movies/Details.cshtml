@@ -30,10 +30,9 @@
                         <p class="col offset-1">
                             @foreach (var genre in Model.Genres)
                             {
-                                @*<a asp-controller="Genres" asp-action="Details" asp-route-id="@Model.Id">
-                                    <img src="@Model.PosterUrl" style="width: 100%" alt="@Model.Title" />
-                                </a>*@
-                                <span class="badge badge-secondary">@genre.Name</span>
+                            <a class="badge badge-secondary" asp-controller="genres" asp-action="details" asp-route-id="@genre.Id">
+                                @genre.Name
+                            </a>
                             }
                         </p>
                     </div>
