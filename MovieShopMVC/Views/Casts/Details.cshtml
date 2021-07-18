@@ -8,17 +8,20 @@
 <div class="rounded">
     <div class="container">
         <div class="row p-5">
-            <div class="col-4">
-                <img class="w-100" src="@Model.ProfilePath" alt="@Model.Name" />
+            <div class="col-2 offset-3">
+                <img class="w-75 " src="@Model.ProfilePath" alt="@Model.Name">
             </div>
-            <div class="col-8">
-                <h1 class="text-center">@Model.Name</h1>
+            <div class="col">
+                <h1 class="">@Model.Name</h1>
+                <h3>
+                    @(Model.Gender == "1" ? "Actress" : (Model.Gender == "2") ? "Actor" : "")
+                    <a href="@Model.TmdbUrl" class="text-dark mx-3">
+                        <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                    </a>
+                </h3>
             </div>
         </div>
-
     </div>
-    
-    
 
     <div class="container-fluid bg-light">
         <div class="row">
