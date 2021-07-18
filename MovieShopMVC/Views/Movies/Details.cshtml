@@ -87,19 +87,21 @@
             <ul class="list-group list-group-flush">
                 @foreach (var cast in Model.Casts)
                 {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-2">
-                                <img class="w-50 rounded-circle" src="@cast.ProfilePath" alt="@cast.Name" />
+                    <a class="text-dark" asp-controller="casts" asp-action="details" asp-route-id="@cast.Id">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img class="w-50 rounded-circle" src="@cast.ProfilePath" alt="@cast.Name" />
+                                </div>
+                                <div class="col-4">
+                                    @cast.Name
+                                </div>
+                                <div class="col">
+                                    @cast.Character
+                                </div>
                             </div>
-                            <div class="col-4">
-                                @cast.Name
-                            </div>
-                            <div class="col">
-                                @cast.Character
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </a>
                 }
             </ul>
         </div>
