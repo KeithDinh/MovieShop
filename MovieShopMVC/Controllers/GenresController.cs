@@ -15,7 +15,6 @@ namespace MovieShopMVC.Controllers
         {
             _genreService = genreService;
         }
-
         public async Task<IActionResult> Details(int id)
         {
             var genre = await _genreService.GetGenreDetails(id);
