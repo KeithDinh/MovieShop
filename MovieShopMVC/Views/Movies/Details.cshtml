@@ -73,10 +73,10 @@
                 </span>
                 </li>
                 <li class="list-group-item bg-transparent">
-                    <a href="#" class="text-dark">
+                    <a href="@Model.ImdbUrl" class="text-dark">
                         <i class="fa fa-imdb" aria-hidden="true"></i>
                     </a>
-                    <a href="#" class="text-dark mx-3">
+                    <a href="@Model.TmdbUrl" class="text-dark mx-3">
                         <i class="fa fa-share-square-o" aria-hidden="true"></i>
                     </a>
                 </li>
@@ -87,19 +87,21 @@
             <ul class="list-group list-group-flush">
                 @foreach (var cast in Model.Casts)
                 {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-2">
-                                <img class="w-50 rounded-circle" src="@cast.ProfilePath" alt="@cast.Name" />
+                    <a class="text-dark" asp-controller="casts" asp-action="details" asp-route-id="@cast.Id">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img class="w-50 rounded-circle" src="@cast.ProfilePath" alt="@cast.Name" />
+                                </div>
+                                <div class="col-4">
+                                    @cast.Name
+                                </div>
+                                <div class="col">
+                                    @cast.Character
+                                </div>
                             </div>
-                            <div class="col-4">
-                                @cast.Name
-                            </div>
-                            <div class="col">
-                                @cast.Character
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </a>
                 }
             </ul>
         </div>
