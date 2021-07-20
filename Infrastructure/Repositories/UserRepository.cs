@@ -16,13 +16,12 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<Purchase> GetPurchasedMovieById(int movieId, int userId)
+        public async Task<Movie> GetPurchasedMovieById(int movieId, int userId)
         {
             var purchase = await _dbContext.Purchases
-                .Where(p => p.MovieId == movieId && p.UserId == userId)
                 .Include(m => m.Movie)
-                .FirstOrDefaultAsync();
-            return purchase;
+                .FirstOrDefaultAsync(p => p.MovieId == movieId && p.UserId == userId);
+            return purchase == null ? null : purchase.Movie;
         }
 
         public async Task<User> GetUserByEmail(string email)

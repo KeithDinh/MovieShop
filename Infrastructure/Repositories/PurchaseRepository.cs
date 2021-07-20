@@ -14,5 +14,10 @@ namespace Infrastructure.Repositories
         public PurchaseRepository(MovieShopDbContext dbContext) : base(dbContext)
         {
         }
+
+        public bool FindPurchaseByUserMovie(int userId, int movieId)
+        {
+            return _dbContext.Purchases.Any(p => p.UserId == userId && p.MovieId == movieId);
+        }
     }
 }

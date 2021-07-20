@@ -9,5 +9,6 @@ namespace ApplicationCore.RepositoryInterfaces
 {
     public interface IPurchaseRepository : IAsyncRepository<Purchase>
     {
+        public bool FindPurchaseByUserMovie(int userId, int movieId);
     }
 }
