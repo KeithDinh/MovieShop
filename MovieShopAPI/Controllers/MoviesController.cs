@@ -30,5 +30,16 @@ namespace MovieShopAPI.Controllers
             }
             return Ok(movies);
         }
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetMovie(int id)
+        {
+            var movie = await _movieService.GetMovieDetails(id);
+            if (movie == null)
+            {
+                return NotFound($"No movie found for the request {id}");
+            }
+            return Ok(movie);
+        }
     }
 }
