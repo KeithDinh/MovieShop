@@ -12,5 +12,6 @@ namespace Infrastructure.Services
         Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel requestModel);
         Task<UserLoginResponseModel> Login(string email, string password);
         Task<MovieCardResponseModel> BuyMovie(int movieId);
+        Task<UserResponseModel> GetUserById(int id);
     }
 }
