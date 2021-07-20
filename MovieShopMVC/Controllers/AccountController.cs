@@ -44,7 +44,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(UserRegisterRequestModel model)
+        public async Task<ActionResult> Login(UserLoginRequestModel model)
         {
             if (!ModelState.IsValid)
             {

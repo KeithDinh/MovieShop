@@ -24,7 +24,7 @@ namespace Infrastructure.Services
         public async Task<UserLoginResponseModel> Login(string email, string password)
         {
             var dbUser = await _userRepository.GetUserByEmail(email);
-            if (dbUser != null)
+            if (dbUser == null)
             {
                 throw new NotFoundException("Email does not exist. Please register first");
             }
