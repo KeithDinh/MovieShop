@@ -1,0 +1,9 @@
+﻿@model ApplicationCore.Models.MovieCardResponseModel
+<h3 class="text-center">You have bought @Model.Title</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <partial name="_MovieCard" model="@Model" />
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 using ApplicationCore.Exceptions;
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
+using ApplicationCore.ServiceInterfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,41 @@ namespace Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        private readonly ICurrentUser _currentUser;
+        private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IMovieRepository _movieRespository;
+        public UserService(IUserRepository userRepository, ICurrentUser currentUser, IPurchaseRepository purchaseRepository, IMovieRepository movieRepository)
         {
             _userRepository = userRepository;
+            _currentUser = currentUser;
+            _purchaseRepository = purchaseRepository;
+            _movieRespository = movieRepository;
+        }
+
+        public async Task<MovieCardResponseModel> BuyMovie(int movieId)
+        {
+            var dbPurchasedMovie = await _userRepository.GetPurchasedMovieById(movieId,_currentUser.UserId);
+            if (dbPurchasedMovie != null)
+            {
+                throw new ConflictException("You already bought this product");
+            }
+            var movie = await _movieRespository.GetByIdAsync(movieId);
+            var newPurchase = new Purchase
+            {
+                UserId = _currentUser.UserId,
+                TotalPrice = movie.Price.GetValueOrDefault(),
+                PurchaseDateTime = DateTime.Now,
+                MovieId = movie.Id,
+            };
+            var createdPurchase = await _purchaseRepository.AddAsync(newPurchase);
+
+            return new MovieCardResponseModel
+            {
+                Id = movie.Id,
+                Budget = movie.Budget.GetValueOrDefault(),
+                PosterUrl = movie.PosterUrl,
+                Title = movie.Title
+            };
         }
 
         public async Task<UserResponseModel> GetUserById(int id)
