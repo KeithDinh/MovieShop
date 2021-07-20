@@ -2,6 +2,7 @@
 using ApplicationCore.Exceptions;
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
+using ApplicationCore.ServiceInterfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,22 @@ namespace Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        private readonly ICurrentUser _currentUser;
+        public UserService(IUserRepository userRepository, ICurrentUser currentUser)
         {
             _userRepository = userRepository;
+            _currentUser = currentUser;
+        }
+
+        public async Task<MovieDetailsResponseModel> BuyMovie(int movieId)
+        {
+            var dbPurchase = await _userRepository.GetPurchasedMovieById(movieId,_currentUser.UserId);
+            if (dbPurchase != null)
+            {
+                throw new ConflictException("You already bought this product");
+            }
+
+            throw new Exception("Not done yet");
         }
 
         public async Task<UserLoginResponseModel> Login(string email, string password)
