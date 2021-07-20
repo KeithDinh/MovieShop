@@ -20,7 +20,6 @@ namespace Infrastructure.Services
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
         {
             var movies = await _movieRepository.GetHighest30GrossingMovies();
-
             var movieCards = new List<MovieCardResponseModel>();
 
             foreach (var movie in movies)
@@ -33,7 +32,6 @@ namespace Infrastructure.Services
                     Title = movie.Title 
                 });
             }
-
             return movieCards;
         }
 
@@ -60,7 +58,6 @@ namespace Infrastructure.Services
             };
 
             movieDetails.Casts = new List<CastResponseModel>();
-
             foreach (var cast in movie.MovieCasts)
             {
                 movieDetails.Casts.Add(new CastResponseModel ()
@@ -84,13 +81,7 @@ namespace Infrastructure.Services
                     }
                 );
             }
-
             return movieDetails;
         }
     }
-
-
-
-
-
 }
