@@ -29,5 +29,14 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
+
+        public async Task<IEnumerable<Review>> GetUserReviews(int userId)
+        {
+            var reviews = await _dbContext
+                .Reviews.Include(m => m.Movie)
+                .Where(r => r.UserId == userId)
+                .ToListAsync();
+            return reviews;
+        }
     }
 }
