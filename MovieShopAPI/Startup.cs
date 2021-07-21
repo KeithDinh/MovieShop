@@ -43,6 +43,9 @@ namespace MovieShopAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+
             services.AddHttpContextAccessor();
 
             services.AddDbContext<MovieShopDbContext>(options => {

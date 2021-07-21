@@ -11,10 +11,7 @@ namespace Infrastructure.Repositories
 {
     public class PurchaseRepository : EfRepository<Purchase>, IPurchaseRepository
     {
-        public PurchaseRepository(MovieShopDbContext dbContext) : base(dbContext)
-        {
-        }
-
+        public PurchaseRepository(MovieShopDbContext dbContext) : base(dbContext) {}
         public bool FindPurchaseByUserMovie(int userId, int movieId)
         {
             return _dbContext.Purchases.Any(p => p.UserId == userId && p.MovieId == movieId);
