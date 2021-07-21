@@ -13,5 +13,7 @@ namespace Infrastructure.Services
         Task<UserLoginResponseModel> Login(string email, string password);
         Task<MovieCardResponseModel> BuyMovie(int movieId);
         Task<UserResponseModel> GetUserById(int id);
+        Task<string> AddToFavorite(int movieId);
+        Task<string> RemoveFromFavorite(int movieId);
     }
 }

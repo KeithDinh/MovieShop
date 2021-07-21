@@ -55,9 +55,11 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> DeleteAsync(T entity)
+        public async Task<T> DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+             _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<bool> GetExistAsync(Expression<Func<T, bool>> filter = null)
