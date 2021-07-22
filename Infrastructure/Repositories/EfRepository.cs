@@ -50,9 +50,11 @@ namespace Infrastructure.Repositories
             return entity;
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Update<T>(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<T> DeleteAsync(T entity)

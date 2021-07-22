@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
+using ApplicationCore.Exceptions;
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterfaces;
@@ -119,6 +121,65 @@ namespace Infrastructure.Services
                 });
             }
             return movies;
+        }
+
+        public async Task<MovieCardResponseModel> CreateMovie(MovieCreateResquestModel movie)
+        {
+            var dbMovie = await _movieRepository.GetExistAsync(m => m.Title == movie.Title);
+            if(dbMovie != null)
+            {
+                throw new ConflictException("Movie already exists");
+            }
+            var newMovie = await _movieRepository.AddAsync(new Movie
+            {
+                Title = movie.Title,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget,
+                Revenue = movie.Revenue,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
+            });
+
+            return new MovieCardResponseModel
+            {
+                Id = newMovie.Id,
+                Budget = newMovie.Budget.GetValueOrDefault(),
+                PosterUrl = newMovie.PosterUrl,
+                Title = newMovie.Title,
+                Rating = newMovie.Rating,
+            };
+        }
+
+        public async Task<MovieDetailsResponseModel> UpdateMovie(MovieUpdateRequestModel movie)
+        {
+            var dbMovie = await _movieRepository.GetByIdAsync(movie.Id);
+            if(dbMovie == null)
+            {
+                throw new ConflictException("No movie exists");
+            }
+
+            dbMovie.Title = movie.Title;
+            dbMovie.PosterUrl = movie.PosterUrl;
+            dbMovie.BackdropUrl = movie.BackdropUrl;
+            dbMovie.Overview = movie.Overview;
+            dbMovie.Tagline = movie.Tagline;
+            dbMovie.Budget = movie.Budget;
+            dbMovie.Revenue = movie.Revenue;
+            dbMovie.ImdbUrl = movie.ImdbUrl;
+            dbMovie.TmdbUrl = movie.TmdbUrl;
+            dbMovie.ReleaseDate = movie.ReleaseDate;
+            dbMovie.RunTime = movie.RunTime;
+            dbMovie.Price = movie.Price;
+
+            var updatedDbMovie = await _movieRepository.UpdateAsync(dbMovie);
+
+            return await GetMovieDetails(updatedDbMovie.Id);
         }
     }
 }
