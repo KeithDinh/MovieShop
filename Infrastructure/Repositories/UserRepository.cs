@@ -38,5 +38,19 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
             return reviews;
         }
+        public async Task<IEnumerable<Movie>> GetUserFavoriteMovies(int userId)
+        {
+            var movies = await _dbContext
+                .Favorites.Include(f => f.Movie)
+                .Where(f => f.UserId == userId).Select(f => f.Movie).ToListAsync();
+            return movies;
+        }
+        public async Task<IEnumerable<Movie>> GetUserPurchases(int userId)
+        {
+            var movies = await _dbContext
+                .Purchases.Include(p => p.Movie)
+                .Where(p => p.UserId == userId).Select(p => p.Movie).ToListAsync();
+            return movies;
+        }
     }
 }

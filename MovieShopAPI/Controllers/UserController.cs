@@ -46,5 +46,33 @@ namespace MovieShopAPI.Controllers
             var result = await _userService.RemoveFromFavorite(movieId);
             return Ok(result);
         }
+        //[HttpGet]
+        //[Route("{id:int}/movie/{movieId:int}/favorite")]
+        //public async Task<IActionResult> GetUserMovieFavorite(int id, int movieId)
+        //{
+
+        //}
+        [HttpGet]
+        [Route("{id:int}/purchases")]
+        public async Task<IActionResult> GetUserPurchases(int id)
+        {
+            var movies = await _userService.GetUserPurchases(id);
+            return Ok(movies);
+        }
+        [HttpGet]
+        [Route("{id:int}/favorites")]
+        public async Task<IActionResult> GetUserFavorites(int id)
+        {
+            var movies = await _userService.GetUserFavoriteMovies(id);
+            return Ok(movies);
+        }
+        [HttpGet]
+        [Route("{id:int}/reviews")]
+        public async Task<IActionResult> GetUserReviews(int id)
+        {
+            var reviews = await _userService.GetUserReviews(id);
+            return Ok(reviews);
+        }
+
     }
 }

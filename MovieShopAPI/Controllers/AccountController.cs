@@ -25,6 +25,18 @@ namespace MovieShopAPI.Controllers
             var createdUser = await _userService.RegisterUser(model);
             return CreatedAtRoute("GetUser", new { id = createdUser.Id }, createdUser);
         }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestModel model)
+        {
+            var user = await _userService.Login(model.Email, model.Password);
+            if (user == null)
+            {
+                return Unauthorized("Password or Email is invalid");
+            }
+            return Ok("You passed");
+        }
         [HttpGet]
         [Route("{id:int}", Name="GetUser")]
         public async Task<IActionResult> GetUserById(int id)

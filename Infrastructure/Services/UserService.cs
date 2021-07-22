@@ -32,7 +32,7 @@ namespace Infrastructure.Services
         public async Task<string> AddToFavorite(int movieId)
         {
             var dbFavorite = await _favoriteRepository.GetExistAsync(f => f.MovieId == movieId && f.UserId == _currentUser.UserId);
-            if(dbFavorite != null)
+            if(dbFavorite != true)
             {
                 return "Conflict";
             }
@@ -174,6 +174,55 @@ namespace Infrastructure.Services
                     iterationCount: 10000,
                     numBytesRequested: 256 / 8));
             return hashed;
+        }
+
+        public async Task<List<ReviewModel>> GetUserReviews(int movieId)
+        {
+            var dbReviews = await _movieRespository.GetMovieReviews(movieId);
+            var reviews = new List<ReviewModel>();
+            foreach (var review in dbReviews)
+            {
+                reviews.Add(new ReviewModel
+                {
+                    MovieId = review.MovieId,
+                    UserId = review.UserId,
+                    Rating = review.Rating,
+                    ReviewText = review.ReviewText,
+                });
+            }
+            return reviews;
+        }
+        public async Task<List<MovieCardResponseModel>> GetUserFavoriteMovies(int userId)
+        {
+            var dbMovies = await _userRepository.GetUserFavoriteMovies(userId);
+            var movies = new List<MovieCardResponseModel>();
+            foreach (var movie in dbMovies)
+            {
+                movies.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Budget = movie.Budget.GetValueOrDefault(),
+                    PosterUrl = movie.PosterUrl,
+                    Title = movie.Title
+                });
+            }
+            return movies;
+        }
+        public async Task<List<MovieCardResponseModel>> GetUserPurchases(int userId)
+        {
+            var dbMovies = await _userRepository.GetUserPurchases(userId);
+            var movies = new List<MovieCardResponseModel>();
+            foreach (var movie in dbMovies)
+            {
+                movies.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Budget = movie.Budget.GetValueOrDefault(),
+                    PosterUrl = movie.PosterUrl,
+                    Title = movie.Title
+                });
+            }
+            return movies;
         }
     }
 }
