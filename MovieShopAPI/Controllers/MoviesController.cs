@@ -33,6 +33,18 @@ namespace MovieShopAPI.Controllers
             return Ok(movies);
         }
         [HttpGet]
+        [Route("toprated")]
+        public async Task<IActionResult> GetTopRatedMovies()
+        {
+
+            var movies = await _movieService.GetTopRatedMovies();
+            if (!movies.Any())
+            {
+                return NotFound("No movies found");
+            }
+            return Ok(movies);
+        }
+        [HttpGet]
         [Route("{id:int}")]
         public async Task<IActionResult> GetMovie(int id)
         {
